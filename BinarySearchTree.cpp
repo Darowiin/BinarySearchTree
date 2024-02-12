@@ -1,37 +1,5 @@
-﻿#include <iostream>
-#include <iomanip>
-#include <queue>
-
-class BinarySearchTree {
-private:
-    struct Node {
-        int key;
-        Node* left;
-        Node* right;
-        Node(const int k) : key(k), left(nullptr), right(nullptr) {}
-    };
-
-    Node* root;
-
-    Node* copyTree(const Node* otherNode);
-    Node* insertRecursive(Node*& node, const int key);
-    Node* findMin(Node* node) const;
-    void eraseRecursive(Node*& node, const int key);
-    void destroyRecursive(Node* node);
-    void printRecursive(Node* root, const std::string& prefix = "", bool isLeft = true) const;
-    bool containsRecursive(Node* node, const int key) const;
-
-public:
-    BinarySearchTree();
-    BinarySearchTree(const BinarySearchTree& other);
-    ~BinarySearchTree();
-    BinarySearchTree& operator=(const BinarySearchTree& other);
-
-    void print() const;
-    bool insert(int key);
-    bool contains(int key) const;
-    bool erase(int key);
-};
+#include "BinarySearchTree.h"
+#include <iostream>
 
 BinarySearchTree::BinarySearchTree() : root(nullptr) {}
 BinarySearchTree::Node* BinarySearchTree::copyTree(const Node* otherNode) {
@@ -148,21 +116,24 @@ bool BinarySearchTree::erase(int key) {
     }
     return false;
 }
+int BinarySearchTree::countRecursive(Node* node) {
+    if (!node)
+        return 0;
+    return countRecursive(node->right) + countRecursive(node->left) + 1;
+}
+int BinarySearchTree::count() {
+    return countRecursive(root);
+}
+BinarySearchTree::Node* BinarySearchTree::searchRecursive(Node* node, int key) {
+    if (node == nullptr || node->key == key)
+        return root;
 
-int main() {
-    BinarySearchTree bst;
-    bst.insert(7);
-    bst.insert(8);
-    bst.insert(3);
-    bst.insert(15);
-    bst.insert(15);
-    bst.insert(6);
-    bst.insert(5);
-    bst.insert(13);
-    bst.print();
-    bst.erase(5);
-    BinarySearchTree bst2(bst);
-    BinarySearchTree bst3 = bst;
-    bst2.print();
-    bst3.print();
+    if (node->key < key)
+        return searchRecursive(node->right, key);
+
+    return searchRecursive(node->left, key);
+}
+bool BinarySearchTree::search(int key) {
+    if (searchRecursive(root, key)) return true;
+    return false;
 }
