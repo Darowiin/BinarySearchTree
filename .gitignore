@@ -32,3 +32,4 @@
 *.app
 /.vs/Set
 /x64/Debug
+/.vs/BinarySearchTree/v17
