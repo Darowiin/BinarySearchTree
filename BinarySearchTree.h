@@ -4,15 +4,14 @@
 class BinarySearchTree {
 private:
     struct Node {
-        int key;
+        int data;
         Node* left;
         Node* right;
-        Node(const int k) : key(k), left(nullptr), right(nullptr) {}
+        Node(const int k) : data(k), left(nullptr), right(nullptr) {}
     };
 
     Node* root;
     Node* copyTree(const Node* otherNode);
-    Node* insertRecursive(Node*& node, const int key);
     Node* findMin(Node* node) const;
     Node* searchRecursive(Node* node, int key);
     void eraseRecursive(Node*& node, const int key);
