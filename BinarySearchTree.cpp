@@ -51,23 +51,27 @@ bool BinarySearchTree::insert(int key) {
         root = new Node(key);
         return true;
     }
-    if (contains(key)) return false;
+    
     Node* tmp = root;
-    if (tmp->data > key) {
-        if (tmp->left)
-            tmp = tmp->left;
-        else {
-            tmp->left = new Node(key);
-            return true;
+    while (tmp && tmp->data != key) {
+        if (tmp->data > key) {
+            if (tmp->left)
+                tmp = tmp->left;
+            else {
+                tmp->left = new Node(key);
+                return true;
+            }
         }
-    }
-    else {
-        if (tmp->right)
-            tmp = tmp->right;
-        else {
-            tmp->right = new Node(key);
-            return true;
+        else if (tmp->data < key) {
+            if (tmp->right)
+                tmp = tmp->right;
+            else {
+                tmp->right = new Node(key);
+                return true;
+            }
         }
+        else
+            return false;
     }
 }
 bool BinarySearchTree::containsRecursive(Node* node, const int key) const {
