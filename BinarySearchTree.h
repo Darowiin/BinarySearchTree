@@ -12,6 +12,7 @@ private:
 
     Node* root;
     Node* copyTree(const Node* otherNode);
+    Node* insertRecursive(Node*& node, const int key);
     Node* findMin(Node* node) const;
     Node* searchRecursive(Node* node, int key);
     void eraseRecursive(Node*& node, const int key);
@@ -25,7 +26,7 @@ public:
     BinarySearchTree(const BinarySearchTree& other);
     ~BinarySearchTree();
     BinarySearchTree& operator=(const BinarySearchTree& other);
-    
+
     void print() const;
     bool insert(int key);
     bool contains(int key) const;

@@ -8,9 +8,9 @@
 #define SIZE 100000
 
 size_t lcg() {
-	static size_t x = 0;
-	x = (1021 * x + 24631) % 116640;
-	return x;
+    static size_t x = 0;
+    x = (1021 * x + 24631) % 116640;
+    return x;
 }
 template<typename Function>
 double measureTime(Function func) {
@@ -24,16 +24,16 @@ int main() {
     //bst
     double averageFillTime = 0;
     for (int attempt = 0; attempt < 100; ++attempt) {
-		BinarySearchTree bst;
+        BinarySearchTree bst;
         auto fillOperation = [&]() {
             for (int i = 0; i < SIZE; ++i) {
                 bst.insert(lcg());
             }
             };
         averageFillTime += measureTime(fillOperation);
-	}
+    }
     averageFillTime /= 100;
-	std::cout << "Average fill time (bst): " << std::fixed << std::setprecision(5) << averageFillTime << " ms" << std::endl;
+    std::cout << "Average fill time (bst): " << std::fixed << std::setprecision(5) << averageFillTime << " ms" << std::endl;
     double averageSearchTime = 0;
     for (int attempt = 0; attempt < 1000; ++attempt) {
         BinarySearchTree bst;
@@ -65,10 +65,9 @@ int main() {
     std::cout << "Average insert&remove time (bst): " << std::fixed << std::setprecision(5) << averageAddRemoveTime << " ms" << std::endl;
     //vector
     std::vector<int> stdVector(SIZE);
-    std::generate(stdVector.begin(), stdVector.end(), [&]() { return lcg(); });
 
     double vectorFillTime = measureTime([&]() {
-        std::vector<int> stdVectorCopy(stdVector);
+        std::generate(stdVector.begin(), stdVector.end(), [&]() { return lcg(); });
         });
     std::cout << "Vector fill time: " << std::fixed << std::setprecision(5) << vectorFillTime << " ms" << std::endl;
     double vectorSearchTime = measureTime([&]() {

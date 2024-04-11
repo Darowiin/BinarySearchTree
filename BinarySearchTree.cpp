@@ -46,33 +46,22 @@ void BinarySearchTree::print() const {
     std::cout << "Tree: " << std::endl;
     printRecursive(root);
 }
+BinarySearchTree::Node* BinarySearchTree::insertRecursive(Node*& node, const int key) {
+    if (!node) {
+        return new Node(key);
+    }
+    if (key < node->data) {
+        node->left = insertRecursive(node->left, key);
+    }
+    else if (key > node->data) {
+        node->right = insertRecursive(node->right, key);
+    }
+    return node;
+}
 bool BinarySearchTree::insert(int key) {
-    if (!root) {
-        root = new Node(key);
-        return true;
-    }
-    
-    Node* tmp = root;
-    while (tmp && tmp->data != key) {
-        if (tmp->data > key) {
-            if (tmp->left)
-                tmp = tmp->left;
-            else {
-                tmp->left = new Node(key);
-                return true;
-            }
-        }
-        else if (tmp->data < key) {
-            if (tmp->right)
-                tmp = tmp->right;
-            else {
-                tmp->right = new Node(key);
-                return true;
-            }
-        }
-        else
-            return false;
-    }
+    root = insertRecursive(root, key);
+    if (root) return true;
+    else return false;
 }
 bool BinarySearchTree::containsRecursive(Node* node, const int key) const {
     if (node) {
